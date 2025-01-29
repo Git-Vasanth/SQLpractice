@@ -16,6 +16,8 @@ In this problem, you're asked to classify triangles based on the lengths of thei
   - A + C > B
   - B + C > A
 
+Question Link : [Hackerank](https://www.hackerrank.com/challenges/what-type-of-triangle/problem?isFullScreen=true)
+
 ### SQL Query:
 
 ```sql
@@ -42,6 +44,8 @@ This problem asks you to pivot data from the `OCCUPATIONS` table, where each rec
 - If any occupation does not have a person in a particular row (i.e., fewer people in one occupation than another), you should fill those gaps with `NULL` values.
 
 The pivoting process involves grouping the data by occupation and then distributing the names across the corresponding columns, ensuring proper sorting and handling of `NULL` values where there are fewer people in an occupation.
+
+Question Link : [Hackerank](https://www.hackerrank.com/challenges/occupations/problem?isFullScreen=true)
 
 ### SQL Query:
 
