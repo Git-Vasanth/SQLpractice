@@ -27,4 +27,38 @@ SELECT
         ELSE 'Scalene'  
     END AS Triangle
 FROM TRIANGLES;
+```
 
+## Problem 2: Occupation Pivot
+
+### Question:
+Write a query to pivot the `OCCUPATIONS` table, so that each occupation (Doctor, Professor, Singer, Actor) has a separate column with the corresponding names listed alphabetically under each occupation. If an occupation has fewer names, fill in the missing rows with `NULL`.
+
+### Explanation:
+This problem asks you to pivot data from the `OCCUPATIONS` table, where each record represents a person's name and their occupation. The goal is to transform this data such that:
+
+- Each occupation (Doctor, Professor, Singer, Actor) becomes a separate column.
+- Under each occupation column, you should list the names of people who have that occupation, sorted alphabetically.
+- If any occupation does not have a person in a particular row (i.e., fewer people in one occupation than another), you should fill those gaps with `NULL` values.
+
+The pivoting process involves grouping the data by occupation and then distributing the names across the corresponding columns, ensuring proper sorting and handling of `NULL` values where there are fewer people in an occupation.
+
+### SQL Query:
+
+```sql
+WITH cte AS (
+    SELECT 
+        Name, 
+        Occupation,
+        row_number() OVER (PARTITION BY Occupation ORDER BY Name ASC) AS row_id
+    FROM OCCUPATIONS
+)
+SELECT 
+    MAX(CASE WHEN Occupation = 'Doctor' THEN Name END) AS Doctor,
+    MAX(CASE WHEN Occupation = 'Professor' THEN Name END) AS Professor,
+    MAX(CASE WHEN Occupation = 'Singer' THEN Name END) AS Singer,
+    MAX(CASE WHEN Occupation = 'Actor' THEN Name END) AS Actor
+FROM cte
+GROUP BY row_id
+ORDER BY row_id;
+```
