@@ -66,3 +66,46 @@ FROM cte
 GROUP BY row_id
 ORDER BY row_id;
 ```
+
+## Problem 3: Grades Report Classification
+
+### Question:
+Write a query to generate a report containing the Name, Grade, and Marks for each student, based on the following conditions:
+
+* Grades >= 8:
+
+Show the actual name of the student.
+Order the results first by Grade (Descending), then by Name (Alphabetically Ascending), and finally by Marks (Descending) if there are multiple students with the same grade.
+
+* Grades < 8:
+
+Display "NULL" as the Name for students with grades lower than 8.
+Order the results first by Grade (Descending), and then by Marks (Ascending) if there are multiple students with the same grade.
+
+Question Link : [Hackerank](https://www.hackerrank.com/challenges/the-report/problem?isFullScreen=true)
+
+### SQL Query:
+
+```sql
+SELECT 
+    CASE 
+        WHEN g.Grade >= 8 THEN s.Name
+        ELSE 'NULL' 
+    END AS Name,
+    g.Grade,
+    s.Marks
+FROM Students s
+JOIN Grades g ON s.Marks BETWEEN g.Min_Mark AND g.Max_Mark  
+ORDER BY 
+    g.Grade DESC,
+    CASE 
+        WHEN g.Grade >= 8 THEN s.Name
+        ELSE NULL
+    END ASC,
+    CASE 
+        WHEN g.Grade < 8 THEN s.Marks
+        ELSE NULL
+    END ASC;
+
+```
+
